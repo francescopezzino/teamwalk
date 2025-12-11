@@ -32,9 +32,10 @@ No parameters
 ### POST /api/v1/admin/teams
 
 No parameters
+<details>
+<summary>Request body</summary>
 
 ```
-Request body
 {
   "name": "Sales",
   "employees": [
@@ -49,8 +50,12 @@ Request body
   ]
 }
 ```
+
+</details>
+<details>
+<summary>Response body</summary>
+
 ```
-Response body
 {
   "id": 1,
   "name": "Sales",
@@ -68,6 +73,10 @@ Response body
   ]
 }
 ```
+</details>
+<details>
+<summary>Curl</summary>
+
 ```
 curl -X 'POST' \
   'http://localhost:8080/api/v1/admin/teams' \
@@ -89,20 +98,85 @@ curl -X 'POST' \
   ]
 }'
 ```
+</details>
+
+<details>
+
+<summary>Test data</summary>
+
+/api/v1/admin/teams
+
+{
+"name": "Marketing",
+"employees": [
+{
+"firstName": "John",
+"lastName": "Doe"
+},
+{
+"firstName": "Jane",
+"lastName": "Smith"
+}
+]
+}
+
+{
+"name": "Management",
+"employees": [
+{
+"firstName": "Maria",
+"lastName": "Kelly"
+},
+{
+"firstName": "Alliana",
+"lastName": "Gold"
+}
+]
+}
+
+{
+"name": "Research",
+"employees": [
+{
+"firstName": "Albert",
+"lastName": "White"
+},
+{
+"firstName": "Lara",
+"lastName": "Croft"
+}
+]
+}
+
+{
+"name": "Sales",
+"employees": [
+{
+"firstName": "Albert",
+"lastName": "White"
+},
+{
+"firstName": "Lara",
+"lastName": "Croft"
+}
+]
+}
+
+</details>
 
 ### POST /api/v1/admin/teams/addTeamStepCounter
 
 No parameters
 
-```
-Request body
+<details>
+<summary>Request body</summary>
 {
   "name": "Slow Motion",
   "teamId": 1
 }
-```
-```
-Response body
+</details>
+<details>
+<summary>Response body</summary>
 {
   "id": 1,
   "name": "Slow Motion",
@@ -110,7 +184,10 @@ Response body
   "steps": 0
 }
 ```
-```
+
+</details>
+<details>
+<summary>Curl</summary>
 curl -X 'POST' \
 'http://localhost:8080/api/v1/admin/teams/addTeamStepCounter' \
 -H 'accept: */*' \
@@ -119,71 +196,12 @@ curl -X 'POST' \
 "name": "Slow Motion",
 "teamId": 1
 }'
-```
+</details>
 
 <details>
 
 <summary>Test data</summary>
 
-/api/v1/admin/teams 
-
-  {
-    "name": "Marketing",
-    "employees": [
-      {
-        "firstName": "John",
-        "lastName": "Doe"
-      },
-      {
-        "firstName": "Jane",
-        "lastName": "Smith"
-      }
-    ]
-  }
-
-  {
-    "name": "Management",
-    "employees": [
-      {
-        "firstName": "Maria",
-        "lastName": "Kelly"
-      },
-      {
-        "firstName": "Alliana",
-        "lastName": "Gold"
-      }
-    ]
-  }
-
-  {
-    "name": "Research",
-    "employees": [
-      {
-		"firstName": "Albert",
-		"lastName": "White"
-      },
-      {
-		"firstName": "Lara",
-		"lastName": "Croft"
-      }
-    ]
-  }  
-  
- {
-   "name": "Sales",
-   "employees": [
-    {
-      "firstName": "Albert",
-      "lastName": "White"
-    },
-    {
-      "firstName": "Lara",
-      "lastName": "Croft"
-    }
-  ]
-}
-```
-```
 /api/v1/admin/teams/addTeamStepCounter
 
 {
@@ -205,7 +223,5 @@ curl -X 'POST' \
   "name": "Endurance",
   "teamId": 4
 }
-
-
 </details>
 
