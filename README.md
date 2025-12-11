@@ -2,30 +2,12 @@
 
 ## Table of Contents
 
-- [User Stories](#features)
-- [Technologies Used](#technologies-used)
-
 
 ## User Stories 
 1. As the organizer I want to create or remove team step counters So that any team can enter or leave the competition
 2. As a team member I want to add steps to my team step counter So that I can help my team win
 3. As a team member I want to get my team’s step count at any time So that I can see my team’s score
-4. As the organizer I want to get a list of all team scores in descending order
-
-## Technologies Used
-
-team-controller
-/teams/addSteps/{employeeId}
-/teams/teamscore/{employeeId}
-
-team-management-controller
-/admin/teams/removeTeamStepCounter/{teamId}
-
-/admin/teams/leaderboard
-Request URL
-GET http://localhost:8080/api/v1/admin/teams/leaderboard
-
-No parameters
+4. As the organizer I want to get a list of all team scores in descending orde
 
 ## team-controller
 
