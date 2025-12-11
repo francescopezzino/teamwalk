@@ -30,18 +30,14 @@ No parameters
 ## team-controller
 
 ### 🟠 PUT /api/v1/teams/addSteps/{employeeId}
-
-
 <details>
 <summary>Parameters</summary>
- employeeId
 
-  * integer($int64)
-  * (path)
+```
+* employeeId | (path param) | integer($int64)
+* steps | (query param) | string
+ ```
 
-steps
-  * string
-  * (query)
 </details>
 <details>
 <summary>Response body</summary>
@@ -67,20 +63,14 @@ curl -X 'PUT' \
 
 </details>
 
-
-### 🟢 POST /api/v1/admin/teams/addTeamStepCounter
-
-No parameters
+### 🔵 GET /api/v1/teams/teamscore/{employeeId}
 
 <details>
-<summary>Request body</summary>
+<summary>Parameters</summary>
 
-```json
-{
-  "name": "Slow Motion",
-  "teamId": 1
-}
 ```
+* employeeId | (path param) | integer($int64)
+ ```
 
 </details>
 
@@ -90,9 +80,9 @@ No parameters
 ```json
 {
   "id": 1,
-  "name": "Slow Motion",
+  "name": "Challenge",
   "teamId": 1,
-  "steps": 0
+  "steps": 2000
 }
 ```
 
@@ -102,43 +92,9 @@ No parameters
 <summary>Curl</summary>
 
 ```
-curl -X 'POST' \
-'http://localhost:8080/api/v1/admin/teams/addTeamStepCounter' \
--H 'accept: */*' \
--H 'Content-Type: application/json' \
--d '{
-"name": "Slow Motion",
-"teamId": 1
-}'
-```
-
-</details>
-
-<details>
-<summary>Test data</summary>
-
-/api/v1/admin/teams/addTeamStepCounter
-
-```
-{
-"name": "Challenge",
-"teamId": 1
-}
-
-{
-"name": "Fastpace",
-"teamId": 2
-}
-
-{
-"name": "Slow Motion",
-"teamId": 3
-}
-
-{
-"name": "Endurance",
-"teamId": 4
-}
+curl -X 'GET' \
+  'http://localhost:8080/api/v1/teams/teamscore/2' \
+  -H 'accept: */*'
 ```
 
 </details>
@@ -355,3 +311,82 @@ curl -X 'POST' \
 
 </details>
 
+
+### 🔵 GET /api/v1/admin/teams/leaderboard
+
+No parameters
+
+<details>
+<summary>Response body</summary>
+
+```json
+[
+  {
+    "id": 2,
+    "name": "Fastpace",
+    "steps": 6088,
+    "version": 1
+  },
+  {
+    "id": 1,
+    "name": "Challenge",
+    "steps": 2000,
+    "version": 1
+  },
+  {
+    "id": 3,
+    "name": "Slow Motion",
+    "steps": 678,
+    "version": 1
+  },
+  {
+    "id": 4,
+    "name": "Endurance",
+    "steps": 0,
+    "version": 0
+  }
+]
+```
+
+</details>
+
+<details>
+<summary>Curl</summary>
+
+```
+curl -X 'GET' \
+  'http://localhost:8080/api/v1/admin/teams/leaderboard' \
+  -H 'accept: */*'
+```
+
+</details>
+
+### 🔵 GET /api/v1/admin/teams/leaderboardFlux
+
+No parameters
+
+<details>
+<summary>Response body</summary>
+
+```json
+data:{"id":2,"name":"Fastpace","steps":6088,"version":1}
+
+data:{"id":1,"name":"Challenge","steps":2000,"version":1}
+
+data:{"id":3,"name":"Slow Motion","steps":678,"version":1}
+
+data:{"id":4,"name":"Endurance","steps":0,"version":0}
+```
+
+</details>
+
+<details>
+<summary>Curl</summary>
+
+```
+curl -X 'GET' \
+  'http://localhost:8080/api/v1/admin/teams/leaderboardFlux' \
+  -H 'accept: text/event-stream'
+```
+
+</details>
