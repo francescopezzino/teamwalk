@@ -27,13 +27,106 @@ GET http://localhost:8080/api/v1/admin/teams/leaderboard
 
 No parameters
 
+## team-management-controller
+
+### POST /api/v1/admin/teams
+
+No parameters
+
+```
+Request body
+{
+  "name": "Sales",
+  "employees": [
+    {
+      "firstName": "Albert",
+      "lastName": "White"
+    },
+    {
+      "firstName": "Lara",
+      "lastName": "Croft"
+    }
+  ]
+}
+```
+```
 Response body
+{
+  "id": 1,
+  "name": "Sales",
+  "employees": [
+    {
+      "id": 1,
+      "firstName": "Albert",
+      "lastName": "White"
+    },
+    {
+      "id": 2,
+      "firstName": "Lara",
+      "lastName": "Croft"
+    }
+  ]
+}
+```
+```
+curl -X 'POST' \
+  'http://localhost:8080/api/v1/admin/teams' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '
+  
+{
+  "name": "Sales",
+  "employees": [
+    {
+      "firstName": "Albert",
+      "lastName": "White"
+    },
+    {
+      "firstName": "Lara",
+      "lastName": "Croft"
+    }
+  ]
+}'
 ```
 
+### POST /api/v1/admin/teams/addTeamStepCounter
+
+No parameters
+
+```
+Request body
+{
+  "name": "Slow Motion",
+  "teamId": 1
+}
+```
+```
+Response body
+{
+  "id": 1,
+  "name": "Slow Motion",
+  "teamId": 1,
+  "steps": 0
+}
+```
+```
+curl -X 'POST' \
+'http://localhost:8080/api/v1/admin/teams/addTeamStepCounter' \
+-H 'accept: */*' \
+-H 'Content-Type: application/json' \
+-d '{
+"name": "Slow Motion",
+"teamId": 1
+}'
 ```
 
-##### Request body json 
-```
+<details>
+
+<summary>Test data</summary>
+
+/api/v1/admin/teams 
+
   {
     "name": "Marketing",
     "employees": [
@@ -90,3 +183,29 @@ Response body
   ]
 }
 ```
+```
+/api/v1/admin/teams/addTeamStepCounter
+
+{
+  "name": "Challenge",
+  "teamId": 1
+}
+
+{
+  "name": "Fastpace",
+  "teamId": 2
+}
+
+{
+  "name": "Slow Motion",
+  "teamId": 3
+}
+
+{
+  "name": "Endurance",
+  "teamId": 4
+}
+
+
+</details>
+
