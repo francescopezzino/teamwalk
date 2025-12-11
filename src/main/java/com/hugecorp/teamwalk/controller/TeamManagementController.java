@@ -68,17 +68,22 @@ public class TeamManagementController {
      * @return
      */
     @GetMapping("/leaderboard")
-    public List<StepCounter> getLeaderboard() {
-        return stepCounterRepository.findAllByOrderByStepsDesc();
+    public ResponseEntity<List<StepCounterDTO>> getLeaderboard() {
+        List<StepCounter>  stepCounters = stepCounterRepository.findAllByOrderByStepsDesc();
+        if (null != stepCounters && !stepCounters.isEmpty()) {
+            return ResponseEntity.ok(stepCounterMapper.toStepCounterDtos(stepCounters));
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping(value = "/leaderboardFlux", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    Flux<StepCounter> getDevices() {
+    public ResponseEntity<Flux<StepCounterDTO>> getDevices() {
         List<StepCounter>  stepCounters = stepCounterRepository.findAllByOrderByStepsDesc();
         if(null == stepCounters || stepCounters.isEmpty()) {
-            return Flux.empty();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return Flux.<StepCounter>fromIterable(stepCounters);
+        List<StepCounterDTO> stepCounterDTOS= stepCounterMapper.toStepCounterDtos(stepCounters);
+        return ResponseEntity.ok(Flux.<StepCounterDTO>fromIterable(stepCounterDTOS));
     }
 
 }

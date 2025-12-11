@@ -348,26 +348,22 @@ No parameters
   {
     "id": 2,
     "name": "Fastpace",
-    "steps": 6088,
-    "version": 1
+    "steps": 6088
   },
   {
     "id": 1,
     "name": "Challenge",
-    "steps": 2000,
-    "version": 1
+    "steps": 2000
   },
   {
     "id": 3,
     "name": "Slow Motion",
-    "steps": 678,
-    "version": 1
+    "steps": 678
   },
   {
     "id": 4,
     "name": "Endurance",
-    "steps": 0,
-    "version": 0
+    "steps": 0
   }
 ]
 ```
@@ -393,13 +389,13 @@ No parameters
 <summary>Response body</summary>
 
 ```
-data:{"id":2,"name":"Fastpace","steps":6088,"version":1}
+data:{"id":2,"name":"Fastpace","steps":6088}
 
-data:{"id":1,"name":"Challenge","steps":2000,"version":1}
+data:{"id":1,"name":"Challenge","steps":2000}
 
-data:{"id":3,"name":"Slow Motion","steps":678,"version":1}
+data:{"id":3,"name":"Slow Motion","steps":678}
 
-data:{"id":4,"name":"Endurance","steps":0,"version":0}
+data:{"id":4,"name":"Endurance","steps":0}
 ```
 
 </details>
