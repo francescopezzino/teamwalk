@@ -311,7 +311,7 @@ curl -X 'POST' \
 
 /api/v1/admin/teams/addTeamStepCounter
 
-```json
+```
 {
   "name": "Challenge",
   "teamId": 1
