@@ -1,0 +1,33 @@
+package com.hugecorp.teamwalk.domain;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.time.OffsetDateTime;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@Entity
+@Table(name = "StepCounters")
+public class StepCounter {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column
+    private String name;
+
+    @Column
+    private Integer steps = 0;
+
+    @OneToOne
+    @JoinColumn(name = "team_id") // Creates a foreign key column in the 'Teams' table
+    @JsonBackReference
+    private Team team;
+
+    @Version
+    private Integer version;
+}
