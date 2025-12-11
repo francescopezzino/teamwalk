@@ -368,7 +368,7 @@ No parameters
 <details>
 <summary>Response body</summary>
 
-```json
+```
 data:{"id":2,"name":"Fastpace","steps":6088,"version":1}
 
 data:{"id":1,"name":"Challenge","steps":2000,"version":1}
