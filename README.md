@@ -83,6 +83,7 @@ No parameters
 ```
 
 </details>
+
 <details>
 <summary>Response body</summary>
 
@@ -293,9 +294,13 @@ No parameters
   "name": "Slow Motion",
   "teamId": 1
 }
+```
+
 </details>
 <details>
 <summary>Response body</summary>
+
+```json
 {
   "id": 1,
   "name": "Slow Motion",
