@@ -45,20 +45,27 @@ steps
 </details>
 <details>
 <summary>Response body</summary>
+
+```json
 {
   "id": 1,
   "name": "Challenge",
   "teamId": 1,
   "steps": 2000
 }
+```
+        
 </details>
 <details>
 <summary>Curl</summary>
+
+```
 curl -X 'PUT' \
   'http://localhost:8080/api/v1/teams/addSteps/1?steps=2000' \
   -H 'accept: */*'
-</details>
+  ```
 
+</details>
 
 
 ### 🟢 POST /api/v1/admin/teams/addTeamStepCounter
@@ -93,7 +100,7 @@ No parameters
 <details>
 <summary>Curl</summary>
 
-```json
+```
 curl -X 'POST' \
 'http://localhost:8080/api/v1/admin/teams/addTeamStepCounter' \
 -H 'accept: */*' \
@@ -111,7 +118,7 @@ curl -X 'POST' \
 
 /api/v1/admin/teams/addTeamStepCounter
 
-```json
+```
 {
 "name": "Challenge",
 "teamId": 1
@@ -132,6 +139,7 @@ curl -X 'POST' \
 "teamId": 4
 }
 ```
+
 </details>
 
 ## team-management-controller
@@ -142,7 +150,7 @@ No parameters
 <details>
 <summary>Request body</summary>
 
-```
+```json
 {
   "name": "Sales",
   "employees": [
@@ -162,7 +170,7 @@ No parameters
 <details>
 <summary>Response body</summary>
 
-```
+```json
 {
   "id": 1,
   "name": "Sales",
@@ -180,6 +188,7 @@ No parameters
   ]
 }
 ```
+
 </details>
 <details>
 <summary>Curl</summary>
@@ -208,12 +217,11 @@ curl -X 'POST' \
 </details>
 
 <details>
-
 <summary>Test data</summary>
 
 /api/v1/admin/teams
 
-```json
+```
 {
 "name": "Marketing",
 "employees": [
@@ -300,7 +308,7 @@ No parameters
 <details>
 <summary>Curl</summary>
 
-```json
+```
 curl -X 'POST' \
 'http://localhost:8080/api/v1/admin/teams/addTeamStepCounter' \
 -H 'accept: */*' \
