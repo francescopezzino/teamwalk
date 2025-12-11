@@ -28,15 +28,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Optional<Team> findTeamByIdEmployeeId(Long employeeId) {
-        Optional<Team> teamOptional = employeeRepository.findTeamById(employeeId);
-        if (teamOptional.isPresent()) {
-            return teamOptional;
-        }
-        return Optional.empty();
-    }
-
-    @Override
     public Optional<Team> addStepsToTeamStepCounterByEmployeeId(Long employeeId, Integer employeeSteps) {
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
         Team team = null;

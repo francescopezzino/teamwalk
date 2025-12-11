@@ -6,20 +6,13 @@ import com.hugecorp.teamwalk.domain.Team;
 import com.hugecorp.teamwalk.mapper.StepCounterMapper;
 import com.hugecorp.teamwalk.mapper.TeamMapper;
 import com.hugecorp.teamwalk.model.StepCounterDTO;
-import com.hugecorp.teamwalk.model.TeamDTO;
 import com.hugecorp.teamwalk.service.EmployeeService;
 import com.hugecorp.teamwalk.service.StepCounterService;
 import com.hugecorp.teamwalk.service.TeamService;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.util.WebUtils;
 
 import java.util.Optional;
 
@@ -31,8 +24,6 @@ public class TeamController {
 
     private final EmployeeService employeeService;
     private final StepCounterService stepCounterService;
-    private final TeamService teamService;
-    private final TeamMapper teamMapper;
     private final StepCounterMapper stepCounterMapper;
 
     /**
@@ -47,7 +38,6 @@ public class TeamController {
         Optional<Team> team = employeeService.addStepsToTeamStepCounterByEmployeeId(employeeId, Integer.valueOf(steps) );
         if (team.isPresent()) {
             StepCounter stepCounter = stepCounterService.findStepCounterById(team.get().getStepcounter().getId()).orElse(null);
-            team.get().getStepcounter().getId();
             if (stepCounter != null) {
                 return ResponseEntity.ok(stepCounterMapper.toStepCounterDto(stepCounter));
             }

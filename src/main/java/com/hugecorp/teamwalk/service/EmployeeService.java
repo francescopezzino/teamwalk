@@ -9,8 +9,6 @@ public interface EmployeeService {
 
     Optional<Employee> findEmployeeById(Long id);
 
-    Optional<Team> findTeamByIdEmployeeId(Long employeeId);
-
     Optional<Team> addStepsToTeamStepCounterByEmployeeId(Long employeeId, Integer employeeSteps);
 
 }
