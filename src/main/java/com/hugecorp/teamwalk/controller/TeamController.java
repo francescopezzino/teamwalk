@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/teams")
+@RequestMapping("teams")
 public class TeamController {
 
     private final EmployeeService employeeService;
