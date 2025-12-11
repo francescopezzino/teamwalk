@@ -27,9 +27,116 @@ GET http://localhost:8080/api/v1/admin/teams/leaderboard
 
 No parameters
 
+## team-controller
+
+### 🟠 PUT /api/v1/teams/addSteps/{employeeId}
+
+
+<details>
+<summary>Parameters</summary>
+ employeeId
+
+  * integer($int64)
+  * (path)
+
+steps
+  * string
+  * (query)
+</details>
+<details>
+<summary>Response body</summary>
+{
+  "id": 1,
+  "name": "Challenge",
+  "teamId": 1,
+  "steps": 2000
+}
+</details>
+<details>
+<summary>Curl</summary>
+curl -X 'PUT' \
+  'http://localhost:8080/api/v1/teams/addSteps/1?steps=2000' \
+  -H 'accept: */*'
+</details>
+
+
+
+### 🟢 POST /api/v1/admin/teams/addTeamStepCounter
+
+No parameters
+
+<details>
+<summary>Request body</summary>
+
+```json
+{
+  "name": "Slow Motion",
+  "teamId": 1
+}
+```
+
+</details>
+<details>
+<summary>Response body</summary>
+
+```json
+{
+  "id": 1,
+  "name": "Slow Motion",
+  "teamId": 1,
+  "steps": 0
+}
+```
+
+</details>
+
+<details>
+<summary>Curl</summary>
+
+```json
+curl -X 'POST' \
+'http://localhost:8080/api/v1/admin/teams/addTeamStepCounter' \
+-H 'accept: */*' \
+-H 'Content-Type: application/json' \
+-d '{
+"name": "Slow Motion",
+"teamId": 1
+}'
+```
+
+</details>
+
+<details>
+<summary>Test data</summary>
+
+/api/v1/admin/teams/addTeamStepCounter
+
+```json
+{
+"name": "Challenge",
+"teamId": 1
+}
+
+{
+"name": "Fastpace",
+"teamId": 2
+}
+
+{
+"name": "Slow Motion",
+"teamId": 3
+}
+
+{
+"name": "Endurance",
+"teamId": 4
+}
+```
+</details>
+
 ## team-management-controller
 
-### POST /api/v1/admin/teams
+### 🟢 POST /api/v1/admin/teams
 
 No parameters
 <details>
@@ -106,6 +213,7 @@ curl -X 'POST' \
 
 /api/v1/admin/teams
 
+```json
 {
 "name": "Marketing",
 "employees": [
@@ -161,15 +269,18 @@ curl -X 'POST' \
 }
 ]
 }
+```
 
 </details>
 
-### POST /api/v1/admin/teams/addTeamStepCounter
+### 🟢 POST /api/v1/admin/teams/addTeamStepCounter
 
 No parameters
 
 <details>
 <summary>Request body</summary>
+
+```json
 {
   "name": "Slow Motion",
   "teamId": 1
@@ -188,6 +299,8 @@ No parameters
 </details>
 <details>
 <summary>Curl</summary>
+
+```json
 curl -X 'POST' \
 'http://localhost:8080/api/v1/admin/teams/addTeamStepCounter' \
 -H 'accept: */*' \
@@ -196,14 +309,16 @@ curl -X 'POST' \
 "name": "Slow Motion",
 "teamId": 1
 }'
+```
+
 </details>
 
 <details>
-
 <summary>Test data</summary>
 
 /api/v1/admin/teams/addTeamStepCounter
 
+```json
 {
   "name": "Challenge",
   "teamId": 1
@@ -223,5 +338,7 @@ curl -X 'POST' \
   "name": "Endurance",
   "teamId": 4
 }
+```
+
 </details>
 
