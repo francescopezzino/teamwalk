@@ -7,6 +7,11 @@
 3. As a team member I want to get my team’s step count at any time So that I can see my team’s score
 4. As the organizer I want to get a list of all team scores in descending order
 
+
+## Swagger OpenAPI definitions
+http://localhost:8080/api/v1/swagger-ui/index.html#/
+
+
 ## team-controller
 
 ### 🟠 PUT /api/v1/teams/addSteps/{employeeId}
