@@ -25,14 +25,14 @@ public class StepCounterServiceImpl implements StepCounterService {
     @Override
     @Transactional
     public StepCounter addTeamStepCounter(StepCounterDTO stepCounterDto) {
-
-        StepCounter stepCounter = stepCounterMapper.toStepCounterEntity(stepCounterDto);
-        stepCounter = stepCounterRepository.save(stepCounter);
-
-        Optional<Team> teamOptional =  teamRepository.findById(stepCounterDto.teamId());
-        Team team = null;
+        Optional<Team> teamOptional = teamRepository.findById(stepCounterDto.teamId());
+        StepCounter stepCounter = null;
         if (teamOptional.isPresent()) {
-            team = teamOptional.get();
+            Team team = teamOptional.get();
+            stepCounter = stepCounterMapper.toStepCounterEntity(stepCounterDto);
+            stepCounter.setTeam(team);
+            stepCounter = stepCounterRepository.save(stepCounter);
+
             team.setStepcounter(stepCounter);
             teamRepository.save(team);
             stepCounter.setTeam(team);

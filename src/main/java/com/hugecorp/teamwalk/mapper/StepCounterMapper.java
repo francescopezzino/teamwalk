@@ -11,6 +11,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface StepCounterMapper {
 
+    @Mapping(target = "teamId", source = "team.id")
     StepCounterDTO toStepCounterDto(StepCounter entity);
 
     @Mapping(target = "id", ignore = true)
