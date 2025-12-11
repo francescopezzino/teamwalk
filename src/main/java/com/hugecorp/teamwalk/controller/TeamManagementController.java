@@ -22,7 +22,7 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("admin/teams")
+@RequestMapping("/admin/teams")
 // @PreAuthorize("hasRole('ORGANIZER')")
 public class TeamManagementController {
 
