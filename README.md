@@ -81,6 +81,50 @@ curl -X 'GET' \
 
 ## team-management-controller
 
+### 🟠 PUT /admin/teams/removeTeamStepCounter/{teamId}
+<details>
+<summary>Parameters</summary>
+
+```
+* teamId | (path param) | integer($int64)
+ ```
+
+</details>
+<details>
+<summary>Response body</summary>
+
+```json
+{
+  "id": 3,
+  "name": "Research",
+  "employees": [
+    {
+      "id": 5,
+      "firstName": "Albert",
+      "lastName": "White"
+    },
+    {
+      "id": 6,
+      "firstName": "Lara",
+      "lastName": "Croft"
+    }
+  ]
+}
+```
+
+</details>
+<details>
+<summary>Curl</summary>
+
+```
+curl -X 'PUT' \
+  'http://localhost:8080/api/v1/admin/teams/removeTeamStepCounter/3' \
+  -H 'accept: */*'
+  ```
+
+</details>
+
+
 ### 🟢 POST /api/v1/admin/teams
 
 No parameters
