@@ -35,9 +35,9 @@ public class TeamController {
     @PutMapping("/addSteps/{employeeId}")
     public ResponseEntity<StepCounterDTO> addStepsToTeam(@PathVariable Long employeeId, @RequestParam(value = "steps", required = true) String steps) {
 
-        Optional<Team> team = employeeService.addStepsToTeamStepCounterByEmployeeId(employeeId, Integer.valueOf(steps) );
-        if (team.isPresent()) {
-            StepCounter stepCounter = stepCounterService.findStepCounterById(team.get().getStepcounter().getId()).orElse(null);
+        Optional<Team> teamOptional = employeeService.addStepsToTeamStepCounterByEmployeeId(employeeId, Integer.valueOf(steps) );
+        if (teamOptional.isPresent() && null != teamOptional.get().getStepcounter()) {
+            StepCounter stepCounter = stepCounterService.findStepCounterById(teamOptional.get().getStepcounter().getId()).orElse(null);
             if (stepCounter != null) {
                 return ResponseEntity.ok(stepCounterMapper.toStepCounterDto(stepCounter));
             }

@@ -35,21 +35,21 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (employeeOptional.isPresent()) {
             employee = employeeOptional.get();
             team = employee.getTeam();
-            var id = team.getStepcounter().getId();
+            if(null != team.getStepcounter()) {
+                var id = team.getStepcounter().getId();
 
-            Optional<StepCounter> stepCounterOptional = stepCounterRepository.findById(id);
-            if (stepCounterOptional.isPresent()) {
-
-                StepCounter stepCounter = stepCounterOptional.get();
-                Integer steps = stepCounter.getSteps();
-                if (steps == null) {
-                    steps = 0;
+                Optional<StepCounter> stepCounterOptional = stepCounterRepository.findById(id);
+                if (stepCounterOptional.isPresent()) {
+                    StepCounter stepCounter = stepCounterOptional.get();
+                    var steps = stepCounter.getSteps();
+                    if (steps == null) {
+                        steps = Integer.valueOf(0);
+                    }
+                    steps = stepCounter.getSteps() + employeeSteps;
+                    stepCounter.setSteps(steps);
+                    stepCounterRepository.save(stepCounter);
                 }
-                steps = stepCounter.getSteps() + employeeSteps;
-                stepCounter.setSteps(steps);
-                stepCounterRepository.save(stepCounter);
             }
-
         }
         return Optional.ofNullable(team);
     }
