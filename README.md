@@ -258,12 +258,12 @@ curl -X 'POST' \
     "employees": 
     [
         {
-            "firstName": "Albert",
-            "lastName": "White"
+            "firstName": "Lory",
+            "lastName": "Black"
         },
         {
-            "firstName": "Lara",
-            "lastName": "Croft"
+            "firstName": "Andrea",
+            "lastName": "Gentile"
         }
     ]
 }
