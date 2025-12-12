@@ -15,8 +15,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import reactor.core.publisher.Flux;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +37,13 @@ public class TeamManagementController {
     @PostMapping
     public ResponseEntity<TeamDTO> createTeam(@RequestBody TeamDTO request) {
         Team createdTeam = teamService.createTeamWithEmployees(request);
-        return new ResponseEntity<>(teamMapper.toTeamDto(createdTeam), HttpStatus.CREATED);
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(createdTeam.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).body(teamMapper.toTeamDto(createdTeam));
     }
 
     /**
@@ -46,7 +54,12 @@ public class TeamManagementController {
     @PostMapping("/addTeamStepCounter")
     public ResponseEntity<StepCounterDTO> createTeamStepCounter(@Valid @RequestBody StepCounterDTO request) {
         StepCounter createdStepCounter  = stepCounterService.addTeamStepCounter(request);
-        return new ResponseEntity<>(stepCounterMapper.toStepCounterDto(createdStepCounter), HttpStatus.CREATED);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(createdStepCounter.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).body(stepCounterMapper.toStepCounterDto(createdStepCounter));
     }
 
     /**
