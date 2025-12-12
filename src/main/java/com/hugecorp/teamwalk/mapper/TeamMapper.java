@@ -10,7 +10,6 @@ public interface TeamMapper {
 
     TeamDTO toTeamDto(Team entity);
 
-    @Mapping(target = "id", ignore = true)
     Team toTeamEntity(TeamDTO dto);
 
 }
