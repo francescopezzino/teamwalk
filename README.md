@@ -209,59 +209,63 @@ curl -X 'POST' \
 
 ```
 {
-"name": "Marketing",
-"employees": [
-{
-"firstName": "John",
-"lastName": "Doe"
-},
-{
-"firstName": "Jane",
-"lastName": "Smith"
+    "name": "Marketing",
+    "employees": 
+    [
+        {
+            "firstName": "John",
+            "lastName": "Doe"
+        },
+        {
+            "firstName": "Jane",
+            "lastName": "Smith"
+        }
+    ]
 }
-]
+--------------------------------------------------------
+{
+    "name": "Management",
+    "employees": 
+    [
+        {
+            "firstName": "Maria",
+            "lastName": "Kelly"
+        },
+        {
+            "firstName": "Alliana",
+            "lastName": "Gold"
+        }
+    ]
 }
-
+--------------------------------------------------------
 {
-"name": "Management",
-"employees": [
-{
-"firstName": "Maria",
-"lastName": "Kelly"
-},
-{
-"firstName": "Alliana",
-"lastName": "Gold"
+    "name": "Research",
+    "employees": 
+    [
+        {
+            "firstName": "Albert",
+            "lastName": "White"
+        },
+        {
+            "firstName": "Lara",
+            "lastName": "Croft"
+        }
+    ]
 }
-]
-}
-
+--------------------------------------------------------
 {
-"name": "Research",
-"employees": [
-{
-"firstName": "Albert",
-"lastName": "White"
-},
-{
-"firstName": "Lara",
-"lastName": "Croft"
-}
-]
-}
-
-{
-"name": "Sales",
-"employees": [
-{
-"firstName": "Albert",
-"lastName": "White"
-},
-{
-"firstName": "Lara",
-"lastName": "Croft"
-}
-]
+    "name": "Sales",
+    "employees": 
+    [
+        {
+            "firstName": "Albert",
+            "lastName": "White"
+        },
+        {
+            "firstName": "Lara",
+            "lastName": "Croft"
+        }
+    ]
 }
 ```
 
