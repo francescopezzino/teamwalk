@@ -29,21 +29,19 @@ import java.util.Optional;
 public class TeamManagementController {
 
     private final TeamService teamService;
-    private final TeamMapper teamMapper;
     private final StepCounterService stepCounterService;
-    private final StepCounterMapper stepCounterMapper;
-    private final StepCounterRepository stepCounterRepository;
 
     @PostMapping
     public ResponseEntity<TeamDTO> createTeam(@RequestBody TeamDTO request) {
-        Team createdTeam = teamService.createTeamWithEmployees(request);
-
+        Optional<TeamDTO> teamOptional = teamService.createTeamWithEmployees(request);
+        if (teamOptional.isPresent()) {
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(createdTeam.getId())
+                .buildAndExpand(teamOptional.get().id())
                 .toUri();
-
-        return ResponseEntity.created(location).body(teamMapper.toTeamDto(createdTeam));
+        return ResponseEntity.created(location).body(teamOptional.get());
+    }
+        throw new UnsupportedOperationException("Some errors occurred, cannot create a step counter");
     }
 
     /**
@@ -53,13 +51,15 @@ public class TeamManagementController {
      */
     @PostMapping("/addTeamStepCounter")
     public ResponseEntity<StepCounterDTO> createTeamStepCounter(@Valid @RequestBody StepCounterDTO request) {
-        StepCounter createdStepCounter  = stepCounterService.addTeamStepCounter(request);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(createdStepCounter.getId())
-                .toUri();
-
-        return ResponseEntity.created(location).body(stepCounterMapper.toStepCounterDto(createdStepCounter));
+        Optional<StepCounterDTO> createdStepCounterOptional = stepCounterService.addTeamStepCounter(request);
+        if (createdStepCounterOptional.isPresent()) {
+            URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                    .path("/{id}")
+                    .buildAndExpand(createdStepCounterOptional.get().id())
+                    .toUri();
+            return ResponseEntity.created(location).body(createdStepCounterOptional.get());
+        }
+        throw new UnsupportedOperationException("Some errors occurred, cannot create a step counter");
     }
 
     /**
@@ -69,11 +69,11 @@ public class TeamManagementController {
      */
     @PutMapping("/removeTeamStepCounter/{teamId}")
     public ResponseEntity<TeamDTO> removeTeamStepCounterId(@PathVariable Long teamId) {
-        Optional<Team> team = teamService.removeStepCounter(teamId);
+        Optional<TeamDTO> team = teamService.removeStepCounter(teamId);
         if (team.isPresent()) {
-            return ResponseEntity.ok(teamMapper.toTeamDto(team.get()));
+            return ResponseEntity.ok(team.get());
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        throw new UnsupportedOperationException("Some errors occurred, cannot remove the step counter");
     }
 
     /**
@@ -82,21 +82,20 @@ public class TeamManagementController {
      */
     @GetMapping("/leaderboard")
     public ResponseEntity<List<StepCounterDTO>> getLeaderboard() {
-        List<StepCounter>  stepCounters = stepCounterRepository.findAllByOrderByStepsDesc();
-        if (null != stepCounters && !stepCounters.isEmpty()) {
-            return ResponseEntity.ok(stepCounterMapper.toStepCounterDtos(stepCounters));
+        Optional<List<StepCounterDTO>> stepCountersOptional = stepCounterService.getAllTeamScoreDesc();
+        if (stepCountersOptional.isPresent()) {
+            return ResponseEntity.ok(stepCountersOptional.get());
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        throw new UnsupportedOperationException("The team score data is not available");
     }
 
     @GetMapping(value = "/leaderboardFlux", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public ResponseEntity<Flux<StepCounterDTO>> getDevices() {
-        List<StepCounter>  stepCounters = stepCounterRepository.findAllByOrderByStepsDesc();
-        if(null == stepCounters || stepCounters.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        Optional<List<StepCounterDTO>> stepCountersOptional = stepCounterService.getAllTeamScoreDesc();
+        if(stepCountersOptional.isPresent()) {
+            return ResponseEntity.ok(Flux.<StepCounterDTO>fromIterable(stepCountersOptional.get()));
         }
-        List<StepCounterDTO> stepCounterDTOS= stepCounterMapper.toStepCounterDtos(stepCounters);
-        return ResponseEntity.ok(Flux.<StepCounterDTO>fromIterable(stepCounterDTOS));
+        throw new UnsupportedOperationException("The team score data is not available");
     }
 
 }

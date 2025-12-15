@@ -4,7 +4,6 @@ import com.hugecorp.teamwalk.domain.Employee;
 import com.hugecorp.teamwalk.domain.Team;
 import com.hugecorp.teamwalk.mapper.TeamMapper;
 import com.hugecorp.teamwalk.model.TeamDTO;
-import com.hugecorp.teamwalk.repos.StepCounterRepository;
 import com.hugecorp.teamwalk.repos.TeamRepository;
 import com.hugecorp.teamwalk.service.TeamService;
 import lombok.RequiredArgsConstructor;
@@ -21,20 +20,19 @@ public class TeamServiceImpl implements TeamService {
     private final TeamRepository teamRepository;
 
     @Transactional
-    public Team createTeamWithEmployees(TeamDTO teamDto) {
-
+    public Optional<TeamDTO> createTeamWithEmployees(TeamDTO teamDto) {
         Team team = teamMapper.toTeamEntity(teamDto);
-         team = teamRepository.save(team); // Saving the team cascades the save to employees
-         for(Employee employee: team.getEmployees()) {
-             employee.setTeam(team);
-         }
-        return team;
+        teamRepository.save(team); // Saving the team cascades the save to employees
+        for (Employee employee : team.getEmployees()) {
+            employee.setTeam(team);
+        }
+        return Optional.ofNullable(team).map(teamMapper::toTeamDto);
     }
 
     @Override
     @Transactional
-    public Optional<Team> removeStepCounter(Long id) {
-        Optional<Team> teamOptional =  teamRepository.findById(id);
+    public Optional<TeamDTO> removeStepCounter(Long id) {
+        Optional<Team> teamOptional = teamRepository.findById(id);
         Team team = null;
         if (teamOptional.isPresent()) {
             team = teamOptional.get();
@@ -42,20 +40,13 @@ public class TeamServiceImpl implements TeamService {
             team.setStepcounter(null);
             teamRepository.save(team);
         }
-        return Optional.ofNullable(team);
-
+        return Optional.ofNullable(team).map(teamMapper::toTeamDto);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Team> findTeamById(Long id) {
-
-        Optional<Team> teamOptional =  teamRepository.findById(id);
-        Team team = null;
-        if (teamOptional.isPresent()) {
-           return Optional.of(teamOptional.get());
-        }
-        return Optional.empty();
+    public Optional<TeamDTO> findTeamById(Long id) {
+        Optional<Team> teamOptional = teamRepository.findById(id);
+        return Optional.ofNullable(teamOptional.get()).map(teamMapper::toTeamDto);
     }
-
 }

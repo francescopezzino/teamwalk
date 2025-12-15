@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,20 +25,20 @@ public class StepCounterServiceImpl implements StepCounterService {
 
     @Override
     @Transactional
-    public StepCounter addTeamStepCounter(StepCounterDTO stepCounterDto) {
+    public  Optional<StepCounterDTO> addTeamStepCounter(StepCounterDTO stepCounterDto) {
         Optional<Team> teamOptional = teamRepository.findById(stepCounterDto.teamId());
         StepCounter stepCounter = null;
         if (teamOptional.isPresent()) {
             Team team = teamOptional.get();
             stepCounter = stepCounterMapper.toStepCounterEntity(stepCounterDto);
             stepCounter.setTeam(team);
-            stepCounter = stepCounterRepository.save(stepCounter);
+            stepCounterRepository.save(stepCounter);
 
             team.setStepcounter(stepCounter);
             teamRepository.save(team);
             stepCounter.setTeam(team);
         }
-        return stepCounter;
+        return Optional.ofNullable(stepCounter).map(stepCounterMapper::toStepCounterDto);
     }
 
     @Override
@@ -48,18 +49,17 @@ public class StepCounterServiceImpl implements StepCounterService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<StepCounter> findStepCounterById(Long id) {
+    public Optional<StepCounterDTO> getStepCounterById(Long id) {
         Optional<StepCounter> stepCounterOptional = stepCounterRepository.findById(id);
-        if (stepCounterOptional.isPresent()) {
-            return stepCounterOptional;
-        }
-        return Optional.empty();
+        return Optional.ofNullable(stepCounterOptional.get()).map(stepCounterMapper::toStepCounterDto);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<StepCounter> findAllTeamScoreDesc() {
-        return stepCounterRepository.findAllByOrderByStepsDesc();
+    public Optional<List<StepCounterDTO>> getAllTeamScoreDesc() {
+        List<StepCounter> stepCounters = stepCounterRepository.findAllByOrderByStepsDesc();
+        List<StepCounterDTO> stepCounterDtos  = stepCounterMapper.toStepCounterDtos(stepCounters);
+        return Optional.ofNullable(stepCounterDtos);
     }
 
 }

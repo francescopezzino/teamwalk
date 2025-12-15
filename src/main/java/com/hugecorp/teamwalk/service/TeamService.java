@@ -7,10 +7,10 @@ import java.util.Optional;
 
 public interface TeamService {
 
-    Team createTeamWithEmployees(TeamDTO request);
+    Optional<TeamDTO> createTeamWithEmployees(TeamDTO request);
 
-    Optional<Team> removeStepCounter(Long teamId);
+    Optional<TeamDTO> removeStepCounter(Long teamId);
 
-    Optional<Team> findTeamById(Long id);
+    Optional<TeamDTO> findTeamById(Long id);
 
 }
