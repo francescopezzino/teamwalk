@@ -10,8 +10,6 @@ public interface StepCounterService {
 
     Optional<StepCounterDTO> addTeamStepCounter(StepCounterDTO stepCounterDto);
 
-    void deleteStepCounter(StepCounter stepCounter);
-
     Optional<StepCounterDTO> getStepCounterById(Long id);
 
     Optional<List<StepCounterDTO>> getAllTeamScoreDesc();

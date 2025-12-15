@@ -2,6 +2,7 @@ package com.hugecorp.teamwalk.service.impl;
 
 import com.hugecorp.teamwalk.domain.StepCounter;
 import com.hugecorp.teamwalk.domain.Team;
+import com.hugecorp.teamwalk.enums.State;
 import com.hugecorp.teamwalk.mapper.StepCounterMapper;
 import com.hugecorp.teamwalk.model.StepCounterDTO;
 import com.hugecorp.teamwalk.repos.StepCounterRepository;
@@ -14,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+
+import static com.hugecorp.teamwalk.enums.State.ENABLED;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +35,7 @@ public class StepCounterServiceImpl implements StepCounterService {
             Team team = teamOptional.get();
             stepCounter = stepCounterMapper.toStepCounterEntity(stepCounterDto);
             stepCounter.setTeam(team);
+            stepCounter.setState(ENABLED);
             stepCounterRepository.save(stepCounter);
 
             team.setStepcounter(stepCounter);
@@ -39,12 +43,6 @@ public class StepCounterServiceImpl implements StepCounterService {
             stepCounter.setTeam(team);
         }
         return Optional.ofNullable(stepCounter).map(stepCounterMapper::toStepCounterDto);
-    }
-
-    @Override
-    @Transactional
-    public void deleteStepCounter(StepCounter stepCounter)  {
-        stepCounterRepository.delete(stepCounter);
     }
 
     @Override
@@ -58,7 +56,11 @@ public class StepCounterServiceImpl implements StepCounterService {
     @Transactional(readOnly = true)
     public Optional<List<StepCounterDTO>> getAllTeamScoreDesc() {
         List<StepCounter> stepCounters = stepCounterRepository.findAllByOrderByStepsDesc();
-        List<StepCounterDTO> stepCounterDtos  = stepCounterMapper.toStepCounterDtos(stepCounters);
+
+        List<StepCounter> stepCountersEnabled = stepCounters.stream().filter(stepCounter -> stepCounter.getState() == ENABLED).toList();
+
+        List<StepCounterDTO> stepCounterDtos  = stepCounterMapper.toStepCounterDtos(stepCountersEnabled);
+
         return Optional.ofNullable(stepCounterDtos);
     }
 

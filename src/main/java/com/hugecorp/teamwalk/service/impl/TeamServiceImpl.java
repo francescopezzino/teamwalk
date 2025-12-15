@@ -1,9 +1,13 @@
 package com.hugecorp.teamwalk.service.impl;
 
 import com.hugecorp.teamwalk.domain.Employee;
+import com.hugecorp.teamwalk.domain.StepCounter;
 import com.hugecorp.teamwalk.domain.Team;
+import com.hugecorp.teamwalk.enums.State;
 import com.hugecorp.teamwalk.mapper.TeamMapper;
 import com.hugecorp.teamwalk.model.TeamDTO;
+import com.hugecorp.teamwalk.repos.EmployeeRepository;
+import com.hugecorp.teamwalk.repos.StepCounterRepository;
 import com.hugecorp.teamwalk.repos.TeamRepository;
 import com.hugecorp.teamwalk.service.TeamService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +22,7 @@ public class TeamServiceImpl implements TeamService {
 
     private final TeamMapper teamMapper;
     private final TeamRepository teamRepository;
+    private final StepCounterRepository stepCounterRepository;
 
     @Transactional
     public Optional<TeamDTO> createTeamWithEmployees(TeamDTO teamDto) {
@@ -36,7 +41,12 @@ public class TeamServiceImpl implements TeamService {
         Team team = null;
         if (teamOptional.isPresent()) {
             team = teamOptional.get();
-
+            Optional<StepCounter> stepCounterOptional = stepCounterRepository.findById(team.getStepcounter().getId());
+            if (stepCounterOptional.isPresent()) {
+                StepCounter stepCounter = stepCounterOptional.get();
+                stepCounter.setState(State.DISABLED);
+                stepCounterRepository.save(stepCounter);
+            }
             team.setStepcounter(null);
             teamRepository.save(team);
         }
