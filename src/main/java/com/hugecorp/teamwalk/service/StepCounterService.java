@@ -8,11 +8,13 @@ import java.util.Optional;
 
 public interface StepCounterService {
 
-    StepCounter addTeamStepCounter(StepCounterDTO stepCounterDto);
+    Optional<StepCounterDTO> addTeamStepCounter(StepCounterDTO stepCounterDto);
 
     void deleteStepCounter(StepCounter stepCounter);
 
-    Optional<StepCounter> findStepCounterById(Long id);
+    Optional<StepCounterDTO> getStepCounterById(Long id);
 
-    List<StepCounter> findAllTeamScoreDesc();
+    Optional<List<StepCounterDTO>> getAllTeamScoreDesc();
+
+
 }

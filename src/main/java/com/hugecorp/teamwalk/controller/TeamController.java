@@ -1,16 +1,12 @@
 package com.hugecorp.teamwalk.controller;
 
 import com.hugecorp.teamwalk.domain.Employee;
-import com.hugecorp.teamwalk.domain.StepCounter;
 import com.hugecorp.teamwalk.domain.Team;
-import com.hugecorp.teamwalk.mapper.StepCounterMapper;
-import com.hugecorp.teamwalk.mapper.TeamMapper;
 import com.hugecorp.teamwalk.model.StepCounterDTO;
 import com.hugecorp.teamwalk.service.EmployeeService;
 import com.hugecorp.teamwalk.service.StepCounterService;
 import com.hugecorp.teamwalk.service.TeamService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +20,6 @@ public class TeamController {
 
     private final EmployeeService employeeService;
     private final StepCounterService stepCounterService;
-    private final StepCounterMapper stepCounterMapper;
 
     /**
      * US 2: As a team member I want to add steps to my team step counter So that I can help my team win
@@ -35,14 +30,14 @@ public class TeamController {
     @PutMapping("/addSteps/{employeeId}")
     public ResponseEntity<StepCounterDTO> addStepsToTeam(@PathVariable Long employeeId, @RequestParam(value = "steps", required = true) String steps) {
 
-        Optional<Team> teamOptional = employeeService.addStepsToTeamStepCounterByEmployeeId(employeeId, Integer.valueOf(steps) );
+        Optional<Team> teamOptional = employeeService.addStepsToTeamStepCounterByEmployeeId(employeeId, Integer.valueOf(steps));
         if (teamOptional.isPresent() && null != teamOptional.get().getStepcounter()) {
-            StepCounter stepCounter = stepCounterService.findStepCounterById(teamOptional.get().getStepcounter().getId()).orElse(null);
-            if (stepCounter != null) {
-                return ResponseEntity.ok(stepCounterMapper.toStepCounterDto(stepCounter));
+            Optional<StepCounterDTO> stepCounterDTOOptional = Optional.ofNullable(stepCounterService.getStepCounterById(teamOptional.get().getStepcounter().getId()).orElse(null));
+            if (stepCounterDTOOptional.isPresent()) {
+                return ResponseEntity.ok(stepCounterDTOOptional.get());
             }
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        throw new UnsupportedOperationException("Some errors occurred, add steps to team for employee " + employeeId);
     }
 
     /**
@@ -52,15 +47,15 @@ public class TeamController {
      */
     @GetMapping("/teamscore/{employeeId}")
     public ResponseEntity<StepCounterDTO> retrieveTeamSteps(@PathVariable Long employeeId) {
-
         Optional<Employee> employeeOptional = employeeService.findEmployeeById(employeeId);
         if (employeeOptional.isPresent()) {
-            StepCounter stepCounter = stepCounterService.findStepCounterById(employeeOptional.get().getTeam().getStepcounter().getId()).orElse(null);
-            if (stepCounter != null) {
-                return ResponseEntity.ok(stepCounterMapper.toStepCounterDto(stepCounter));
+            Optional<StepCounterDTO> stepCounterDTOOptional = Optional.ofNullable(stepCounterService.getStepCounterById(employeeOptional.get().getTeam().getStepcounter().getId()).orElse(null));
+            if (stepCounterDTOOptional.isPresent()) {
+                return ResponseEntity.ok(stepCounterDTOOptional.get());
             }
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        throw new UnsupportedOperationException("Some errors occurred, add steps to team for employee " + employeeId);
     }
 
 }
+
