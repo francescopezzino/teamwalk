@@ -1,6 +1,7 @@
 package com.hugecorp.teamwalk.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.hugecorp.teamwalk.enums.State;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,4 +29,7 @@ public class StepCounter {
 
     @Version
     private Integer version;
+
+    @Enumerated(EnumType.STRING)
+    private State state;
 }

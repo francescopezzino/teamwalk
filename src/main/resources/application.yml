@@ -1,0 +1,31 @@
+hibernate:
+    hbm2ddl:
+        auto: validate
+management:
+    endpoints:
+        jmx:
+            exposure:
+                include: health,metrics,info,env,beans,configprops
+        web:
+            exposure:
+                include: health,metrics,info,env,beans,configprops
+server:
+    servlet:
+        context-path: '/api/v1    '
+spring:
+    application:
+        name: teamwalk
+    datasource:
+        driverClassName: com.mysql.cj.jdbc.Driver
+        password: password
+        url: jdbc:mysql://localhost:3306/TEAMWALK?serverTimezone=UTC
+        username: administrator
+    jpa:
+        hibernate:
+            ddl-auto: create-drop
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQLDialect
+        show-sql: true
+springdoc:
+    pathsToMatch: /**

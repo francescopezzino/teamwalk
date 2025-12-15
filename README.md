@@ -325,17 +325,17 @@ curl -X 'POST' \
   "name": "Challenge",
   "teamId": 1
 }
-
+--------------------------------------------------------
 {
   "name": "Fastpace",
   "teamId": 2
 }
-
+--------------------------------------------------------
 {
   "name": "Slow Motion",
   "teamId": 3
 }
-
+--------------------------------------------------------
 {
   "name": "Endurance",
   "teamId": 4
@@ -346,6 +346,7 @@ curl -X 'POST' \
 
 
 ### 🔵 GET /api/v1/admin/teams/leaderboard
+get a list of all team scores in descending order
 
 No parameters
 
@@ -391,6 +392,8 @@ curl -X 'GET' \
 </details>
 
 ### 🔵 GET /api/v1/admin/teams/leaderboardFlux
+get a list of all team scores in descending order
+
 
 No parameters
 
