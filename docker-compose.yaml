@@ -1,0 +1,31 @@
+services:
+  db:
+    image: mysql:8.4
+    container_name: teamwalk-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: TEAMWALK
+      MYSQL_USER: administrator
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  app:
+    build: .
+    container_name: teamwalk-app
+    ports:
+      - "8090:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/TEAMWALK?allowPublicKeyRetrieval=true&useSSL=false
+      - SPRING_DATASOURCE_USERNAME=administrator
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_PROFILES_ACTIVE=docker  # This triggers application-docker.yml
+    depends_on:
+      db:
+        condition: service_healthy

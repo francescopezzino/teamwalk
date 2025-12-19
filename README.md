@@ -422,3 +422,12 @@ curl -X 'GET' \
 ```
 
 </details>
+
+Build the image and specify the Dockerfile and a tag for the image,
+this will create an image locally on my system
+
+docker build Dockerfile -t francescopezzino/teamwalk
+
+to make it available on the public dockerhub registry:
+
+docker push francescopezzino/teamwalk

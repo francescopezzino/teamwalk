@@ -21,7 +21,7 @@ public class Employee {
     @Column
     private String lastName;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teamId")
     @JsonBackReference
     private Team team;

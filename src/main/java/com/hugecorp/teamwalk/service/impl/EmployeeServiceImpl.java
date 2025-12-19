@@ -3,6 +3,8 @@ package com.hugecorp.teamwalk.service.impl;
 import com.hugecorp.teamwalk.domain.Employee;
 import com.hugecorp.teamwalk.domain.StepCounter;
 import com.hugecorp.teamwalk.domain.Team;
+import com.hugecorp.teamwalk.mapper.TeamMapper;
+import com.hugecorp.teamwalk.model.TeamDTO;
 import com.hugecorp.teamwalk.repos.EmployeeRepository;
 import com.hugecorp.teamwalk.repos.StepCounterRepository;
 import com.hugecorp.teamwalk.service.EmployeeService;
@@ -17,6 +19,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
     private final StepCounterRepository stepCounterRepository;
+    private final TeamMapper teamMapper;
 
     @Override
     public Optional<Employee> findEmployeeById(Long id) {
@@ -28,7 +31,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Optional<Team> addStepsToTeamStepCounterByEmployeeId(Long employeeId, Integer employeeSteps) {
+    public Optional<TeamDTO> addStepsToTeamStepCounterByEmployeeId(Long employeeId, Integer employeeSteps) {
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
         Team team = null;
         Employee employee = null;
@@ -51,7 +54,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 }
             }
         }
-        return Optional.ofNullable(team);
+        return Optional.ofNullable(teamMapper.toTeamDto(team));
     }
 
 }

@@ -1,0 +1,36 @@
+hibernate:
+  hbm2ddl:
+    auto: validate
+management:
+  endpoints:
+    jmx:
+      exposure:
+        include: health,metrics,info,env,beans,configprops
+    web:
+      exposure:
+        include: health,metrics,info,env,beans,configprops
+server:
+  servlet:
+    context-path: '/api/v1'
+spring:
+  sql:
+    init:
+      mode: always # Forces data.sql to run even on MySQL
+    hibernate:
+      ddl-auto: create-drop # Recommended for development to keep data.sql clean
+  application:
+    name: teamwalk
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/TEAMWALK}
+    username: ${SPRING_DATASOURCE_USERNAME:administrator}
+    password: ${SPRING_DATASOURCE_PASSWORD:password}
+  jpa:
+    defer-datasource-initialization: true # Waits for Hibernate to create tables
+    hibernate:
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO:validate}
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+    show-sql: true
+springdoc:
+  pathsToMatch: /**
