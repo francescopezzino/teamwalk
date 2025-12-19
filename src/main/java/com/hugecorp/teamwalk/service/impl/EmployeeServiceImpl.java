@@ -46,7 +46,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                     StepCounter stepCounter = stepCounterOptional.get();
                     var steps = stepCounter.getSteps();
                     if (steps == null) {
-                        steps = Integer.valueOf(0);
+                        steps = 0;
                     }
                     steps = stepCounter.getSteps() + employeeSteps;
                     stepCounter.setSteps(steps);

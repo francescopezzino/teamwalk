@@ -1,19 +1,14 @@
 package com.hugecorp.teamwalk.controller;
 
 import com.hugecorp.teamwalk.domain.Employee;
-import com.hugecorp.teamwalk.domain.Team;
 import com.hugecorp.teamwalk.exception.ResourceNotFoundException;
 import com.hugecorp.teamwalk.model.StepCounterDTO;
 import com.hugecorp.teamwalk.model.TeamDTO;
 import com.hugecorp.teamwalk.service.EmployeeService;
 import com.hugecorp.teamwalk.service.StepCounterService;
-import com.hugecorp.teamwalk.service.TeamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
-
 
 @RestController
 @RequiredArgsConstructor
@@ -30,7 +25,7 @@ public class TeamController {
      * @return
      */
     @PutMapping("/addSteps/{employeeId}")
-    public ResponseEntity<StepCounterDTO> addStepsToTeam(@PathVariable Long employeeId, @RequestParam(value = "steps", required = true) String steps) {
+    public ResponseEntity<StepCounterDTO> addStepsToTeam(@PathVariable Long employeeId, @RequestParam(required = true) String steps) {
 
         TeamDTO teamDTO = employeeService.addStepsToTeamStepCounterByEmployeeId(employeeId, Integer.valueOf(steps))
                 .orElseThrow(() -> new ResourceNotFoundException("Employee or Team not found: " + employeeId));

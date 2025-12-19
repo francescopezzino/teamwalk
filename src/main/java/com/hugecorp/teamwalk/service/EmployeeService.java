@@ -1,7 +1,6 @@
 package com.hugecorp.teamwalk.service;
 
 import com.hugecorp.teamwalk.domain.Employee;
-import com.hugecorp.teamwalk.domain.Team;
 import com.hugecorp.teamwalk.model.TeamDTO;
 
 import java.util.Optional;
