@@ -20,12 +20,17 @@ spring:
         password: password
         url: jdbc:mysql://localhost:3306/TEAMWALK?serverTimezone=UTC
         username: administrator
+    sql:
+      init:
+          mode: always
     jpa:
+        defer-datasource-initialization: true
         hibernate:
-            ddl-auto: create-drop
+            ddl-auto: none
         properties:
             hibernate:
                 dialect: org.hibernate.dialect.MySQLDialect
         show-sql: true
+        generate-ddl: false
 springdoc:
     pathsToMatch: /**
