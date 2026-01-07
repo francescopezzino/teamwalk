@@ -73,7 +73,7 @@ public class TeamManagementController {
      * @return
      */
     @PutMapping("/removeTeamStepCounter/{teamId}")
-    @Operation(summary = "US 1: Logical delete of a step counter from a team")
+    @Operation(summary = "US 1: Disable/Remove a team's step counter")
     public ResponseEntity<TeamDTO> removeTeamStepCounterId(@PathVariable Long teamId) {
         Optional<TeamDTO> team = teamService.removeStepCounter(teamId);
         if (team.isPresent()) {
