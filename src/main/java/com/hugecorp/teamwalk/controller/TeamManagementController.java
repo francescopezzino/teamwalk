@@ -9,6 +9,8 @@ import com.hugecorp.teamwalk.model.TeamDTO;
 import com.hugecorp.teamwalk.repos.StepCounterRepository;
 import com.hugecorp.teamwalk.service.StepCounterService;
 import com.hugecorp.teamwalk.service.TeamService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,12 +28,14 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @RequestMapping("/admin/teams")
 // @PreAuthorize("hasRole('ORGANIZER')")
+@Tag(name = "Admin Management", description = "Team and Leaderboard administration")
 public class TeamManagementController {
 
     private final TeamService teamService;
     private final StepCounterService stepCounterService;
 
     @PostMapping
+    @Operation(summary = "Create a new team with employees")
     public ResponseEntity<TeamDTO> createTeam(@RequestBody TeamDTO request) {
         Optional<TeamDTO> teamOptional = teamService.createTeamWithEmployees(request);
         if (teamOptional.isPresent()) {
@@ -50,6 +54,7 @@ public class TeamManagementController {
      * @return
      */
     @PostMapping("/addTeamStepCounter")
+    @Operation(summary = "US 1: Assign a step counter to a team")
     public ResponseEntity<StepCounterDTO> createTeamStepCounter(@Valid @RequestBody StepCounterDTO request) {
         Optional<StepCounterDTO> createdStepCounterOptional = stepCounterService.addTeamStepCounter(request);
         if (createdStepCounterOptional.isPresent()) {
@@ -57,7 +62,7 @@ public class TeamManagementController {
                     .path("/{id}")
                     .buildAndExpand(createdStepCounterOptional.get().id())
                     .toUri();
-            return ResponseEntity.created(location).body(createdStepCounterOptional.get());
+            return ResponseEntity.created(location).body(createdStepCounterOptional.get()) ;
         }
         throw new UnsupportedOperationException("Some errors occurred, cannot create a step counter");
     }
@@ -68,6 +73,7 @@ public class TeamManagementController {
      * @return
      */
     @PutMapping("/removeTeamStepCounter/{teamId}")
+    @Operation(summary = "US 1: Logical delete of a step counter from a team")
     public ResponseEntity<TeamDTO> removeTeamStepCounterId(@PathVariable Long teamId) {
         Optional<TeamDTO> team = teamService.removeStepCounter(teamId);
         if (team.isPresent()) {
@@ -81,6 +87,7 @@ public class TeamManagementController {
      * @return
      */
     @GetMapping("/leaderboard")
+    @Operation(summary = "US 4: View leaderboard (Sorted Descending)")
     public ResponseEntity<List<StepCounterDTO>> getLeaderboard() {
         Optional<List<StepCounterDTO>> stepCountersOptional = stepCounterService.getAllTeamScoreDesc();
         if (stepCountersOptional.isPresent()) {
@@ -90,6 +97,7 @@ public class TeamManagementController {
     }
 
     @GetMapping(value = "/leaderboardFlux", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @Operation(summary = "Stream leaderboard updates via Server-Sent Events (SSE)")
     public ResponseEntity<Flux<StepCounterDTO>> getDevices() {
         Optional<List<StepCounterDTO>> stepCountersOptional = stepCounterService.getAllTeamScoreDesc();
         if(stepCountersOptional.isPresent()) {
